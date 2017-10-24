@@ -1,0 +1,31 @@
+---
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## October 24, 2017
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(leaflet)
+
+austrian.cities <- data.frame(name = c("Vienna", "Graz", "Linz", "Salzburg", 
+                                               "Innsbruck", "Klagenfurt", "Sankt Poelten",
+                                               "Bregenz", "Eisenstadt"),
+                                      population = c(1840000, 273000, 198000, 148000, 
+                                                     126000, 97000, 52000, 28000, 13000),
+                                      lat = c(48.210033, 47.076668, 48.300255, 
+                                              47.811195, 47.259659, 46.6247222,
+                                              48.2, 47.50311, 47.8436),
+                                      lng = c(16.363449, 15.421371, 14.286057, 
+                                               13.033229, 11.400375, 14.3052778, 
+                                               15.63333, 9.7471, 16.5251))
+austrian.cities %>%
+        leaflet() %>%
+        addTiles() %>%
+        addCircles(weight = 1, radius = sqrt(austrian.cities$population)*20) %>%
+        addMarkers(popup = paste("City:", austrian.cities$name, "<br>",
+                                 "Population:", austrian.cities$population))
+```
