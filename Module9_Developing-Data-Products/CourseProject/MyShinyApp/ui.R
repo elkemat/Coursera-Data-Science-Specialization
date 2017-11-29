@@ -6,7 +6,7 @@ library(shiny)
 # Define UI for application that draws a histogram
 shinyUI(pageWithSidebar(
         
-        headerPanel("Probability for Automatic vs. Manuel Car"),
+        headerPanel("Probability for Automatic vs. Manual Car"),
         
         sidebarPanel(
                 strong("Documentation:"),
