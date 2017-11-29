@@ -20,6 +20,6 @@ shinyServer(function(input, output) {
                 probAutomatic <- 1 - probManual
                 probs <- c(manual = probManual, automatic = probAutomatic)
                 barplot(probs, xlab = "Transmission", ylab = "Probability", 
-                        names.arg = c("manuel", "automatic"))
+                        names.arg = c("manual", "automatic"))
         })
 })
