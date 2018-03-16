@@ -1,0 +1,72 @@
+Pitching MyShinyApp
+========================================================
+author: elkemat
+date: November 29, 2017
+autosize: true
+
+
+Background
+========================================================
+
+With MyShinyApp you can analyse the probability of a car having manual or 
+automatic transmission based on 
+- the miles per gallon  
+- number of forward gears 
+
+
+The Underlying Data
+========================================================
+
+The relevant variables for building the logistic regression model are the 
+following:
+
+```{r}
+data <- data.frame(as.factor(mtcars$am), mtcars$mpg, as.factor(mtcars$gear))
+names <- c("Transmission", "MPG", "Gears")
+colnames(data) <- names
+summary(data)
+```
+
+Probability for Automatic vs. Manual Car
+========================================================
+
+For 15 miles per gallon and 4 forward gears, the probabilities would look like 
+this:
+
+```{r, echo=FALSE}
+
+model <- glm(am ~ as.factor(gear) + mpg, data = mtcars, family = "binomial")
+        
+mpg.input <- 15
+gear.input <- 4
+newdata <- data.frame(gear = as.factor(gear.input), mpg = mpg.input)
+
+probManual <- predict(model, newdata = newdata, type = "response")
+probAutomatic <- 1 - probManual
+probs <- c(manual = probManual, automatic = probAutomatic)
+barplot(probs, xlab = "Transmission", ylab = "Probability", names.arg = c("manuel", "automatic"))
+
+```
+
+Probability for Automatic vs. Manual Car
+========================================================
+
+Changing the value to 30 miles per gallon results in probabilities below. This 
+shows that for cars with 4 forward gears, the miles per gallon are a good 
+indication for the transmission (as automatic cars need less fuel).
+
+```{r, echo=FALSE}
+
+model <- glm(am ~ as.factor(gear) + mpg, data = mtcars, family = "binomial")
+        
+mpg.input <- 30
+gear.input <- 4
+newdata <- data.frame(gear = as.factor(gear.input), mpg = mpg.input)
+
+probManual <- predict(model, newdata = newdata, type = "response")
+probAutomatic <- 1 - probManual
+probs <- c(manual = probManual, automatic = probAutomatic)
+barplot(probs, xlab = "Transmission", ylab = "Probability", names.arg = c("manuel", "automatic"))
+
+```
+
